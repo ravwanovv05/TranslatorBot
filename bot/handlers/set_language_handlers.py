@@ -48,6 +48,11 @@ async def set_language_handler(query: types.CallbackQuery):
 async def my_selected_language_handler(message: types.Message):
     telegram_id = message.from_user.id
     data = language_data(telegram_id)
-    language_name = data['name']
+
+    if data['name'] == 'None':
+        language_name = 'Afsuski siz hali tilni sozlamagansiz.'
+    else:
+        language_name = data['name']
+
     await message.answer(language_name)
 

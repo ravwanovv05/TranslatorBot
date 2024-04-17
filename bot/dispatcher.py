@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 loop = asyncio.get_event_loop()
-storage = MemoryStorage()
 
-bot = Bot(token=os.getenv('BOT_TOKEN'))
-dp = Dispatcher(bot=bot)
+bot = Bot(token=os.getenv('BOT_TOKEN'), loop=loop)
+dp = Dispatcher(bot=bot, storage=MemoryStorage())

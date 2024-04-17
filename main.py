@@ -1,13 +1,12 @@
 import logging
 from aiogram import types
 from aiogram.types import InlineKeyboardButton, WebAppInfo, InlineKeyboardMarkup
-from aiogram.utils import executor
 from aiogram.utils.executor import start_webhook
-
-from bot.dispatcher import dp, bot
+from bot.dispatcher import dp
 from bot.handlers.main_handlers import start_handler, help_handler
-from bot.handlers.set_language_handlers import language_list_handler, next_back_language_handler, set_language_handler, \
-    my_selected_language_handler, delete_language_handler
+from bot.handlers.set_language_handlers import (
+    language_list_handler, next_back_language_handler, set_language_handler,
+    my_selected_language_handler, delete_language_handler)
 from bot.handlers.translate_message_handlers import translate_message_handler
 from bot.handlers.main_handlers import WEBHOOK_URL_PATH, on_startup, on_shutdown, WEBAPP_HOST, WEBAPP_PORT
 

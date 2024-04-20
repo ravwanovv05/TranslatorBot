@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.utils.exceptions import BadRequest
-from api.translate_languages import TranslateLanguage, language_data, language_list
+from api.translate_languages import TranslateLanguage, language_name, language_list
 from bot.dispatcher import bot
 from bot.inline_buttons.language_buttons import language_button
 from math import ceil
@@ -47,12 +47,12 @@ async def set_language_handler(query: types.CallbackQuery):
 
 async def my_selected_language_handler(message: types.Message):
     telegram_id = message.from_user.id
-    data = language_data(telegram_id)
+    data = language_name(telegram_id)
 
     if data['name'] == 'None':
-        language_name = 'Afsuski siz hali tilni sozlamagansiz.'
+        lang_name = 'Afsuski siz hali tilni sozlamagansiz.'
     else:
-        language_name = data['name']
+        lang_name = data['name']
 
-    await message.answer(language_name)
+    await message.answer(f"Sizning tilingiz | {lang_name}")
 

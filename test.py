@@ -116,5 +116,7 @@ url = 'http://127.0.0.1:8000/api/add-language'
 
 for code, name in languages[0].items():
     response = requests.post(url, data={'name': name, 'lang_code': code})
+    # print(code, name)
     print(response.json())
 
+# print(list(languages[0].values()))

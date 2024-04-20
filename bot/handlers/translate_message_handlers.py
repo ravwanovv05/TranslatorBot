@@ -1,16 +1,15 @@
 from aiogram import types
-
-from api.translators import Translator
+from api.translate_languages import language_data
+from translate_FUN.translator import translate_message
 
 
 async def translate_message_handler(message: types.Message):
     telegram_id = message.from_user.id
     text = message.text
-    translator = Translator(text, telegram_id)
-    translate = translator.translate()
-    if translate:
-        translated_text = translate['translated_text']
+    data = language_data(telegram_id)
+    translator = translate_message(text, data['lang_code'])
 
-        await message.answer(translated_text)
+    if translator:
+        await message.answer(translator)
     else:
         await message.answer("Siz til tanlamagansiz tilni tanlash uchun esa /set buyrug'ini yuboring.")

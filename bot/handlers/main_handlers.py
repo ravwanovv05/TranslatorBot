@@ -1,8 +1,9 @@
+import os
 from aiogram import types
 from api.telegram_users import TelegramUser
 from bot.dispatcher import bot, dp
 from bot.reply_buttons.after_start_buttons import buttons
-
+from telegram_users_DB.function_DB import read_json_data, write_json_data
 
 WEBHOOK_HOST = 'https://c825-178-218-201-17.ngrok-free.app'  # Domain name or IP addres which your bot is located.
 WEBHOOK_PORT = 443  # Telegram Bot API allows only for usage next ports: 443, 80, 88 or 8443
@@ -34,8 +35,29 @@ async def start_handler(message: types.Message):
     telegram_id = message.from_user.id
     name = first_name + " " + last_name if last_name else first_name
 
-    telegram_user = TelegramUser(first_name, language, telegram_id, last_name, username)
-    telegram_user.create_user()
+    file_path = os.path.abspath('telegram_users_DB/telegram_users.json')
+
+    telegram_users_data = read_json_data(file_path)
+    telegram_users_id = []
+
+    for info in telegram_users_data:
+        telegram_users_id.append(info['telegram_id'])
+
+    if telegram_id not in telegram_users_id:
+        telegram_users_data.append(
+            {
+                "first_name": first_name,
+                "last_name": last_name,
+                "username": username,
+                "lang_code": language,
+                "telegram_id": telegram_id
+            }
+
+        )
+        write_json_data(file_path, telegram_users_data)
+
+        telegram_user = TelegramUser(first_name, language, telegram_id, last_name, username)
+        telegram_user.create_user()
 
     await message.answer(f"Xush kelibsiz, {name}.", reply_markup=buttons())
 

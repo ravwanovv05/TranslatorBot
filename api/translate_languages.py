@@ -22,7 +22,13 @@ def language_list():
     return response.json()
 
 
-def language_data(telegram_id):
+def language_name(telegram_id):
     url = f"http://127.0.0.1:8000/api/selected-language/{telegram_id}"
+    response = requests.get(url)
+    return response.json()
+
+
+def language_data(telegram_id):
+    url = f"http://127.0.0.1:8000/api/language-data/{telegram_id}"
     response = requests.get(url)
     return response.json()
